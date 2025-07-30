@@ -68,7 +68,7 @@ cd langconnect
 # Install dependencies and start
 uv sync
 # Ensure PostgreSQL is running, then:
-python -m langconnect
+ docker-compose up -d
 # Server will start on http://localhost:8080
 ```
 
