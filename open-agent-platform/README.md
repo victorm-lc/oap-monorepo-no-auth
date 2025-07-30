@@ -25,6 +25,47 @@ For detailed setup instructions, guides, and API references, please visit our **
 
 To quickly get started with Open Agent Platform, check out the [Quickstart Guide](https://docs.oap.langchain.com/quickstart) in our documentation.
 
+### Development Setup
+
+This project is set up as a monorepo and supports both Yarn and npm package managers.
+
+#### Using Yarn (Recommended)
+```bash
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+
+# Build the project
+yarn build
+```
+
+#### Using npm
+```bash
+# IMPORTANT: Remove conflicting lockfiles first (if switching from Yarn)
+rm -rf node_modules yarn.lock apps/web/node_modules apps/web/.next
+
+# Install dependencies (use --legacy-peer-deps if you encounter peer dependency issues)
+npm install --legacy-peer-deps
+
+# Install web app dependencies
+cd apps/web
+npm install --legacy-peer-deps
+
+# Go back to root and start development server
+cd ../..
+npm run dev
+
+# Build the project
+npm run build
+```
+
+**Important Notes for npm users**:
+- **Always remove conflicting lockfiles**: If switching from Yarn to npm, you must remove `yarn.lock`, `node_modules`, and any build caches (`.next` folder) to avoid webpack bundling errors
+- **Install in both locations**: In this monorepo, you need to install dependencies in both the root directory and `apps/web/` 
+- **Use --legacy-peer-deps**: This flag resolves peer dependency conflicts that may occur with newer npm versions
+
 ## Community and Support
 
 - **GitHub Issues**: Report bugs or request features [here](https://github.com/langchain-ai/open-agent-platform/issues).
