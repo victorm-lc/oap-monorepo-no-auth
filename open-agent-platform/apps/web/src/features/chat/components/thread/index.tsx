@@ -238,7 +238,7 @@ export function Thread() {
   const { session } = useAuthContext();
 
   const stream = useStreamContext();
-  const messages = stream.messages;
+  const messages = stream.values?.messages || [];
   const isLoading = stream.isLoading;
 
   const lastError = useRef<string | undefined>(undefined);
@@ -298,13 +298,12 @@ export function Thread() {
       ] as Message["content"],
     };
 
-    const toolMessages = ensureToolCallsHaveResponses(stream.messages);
+    const toolMessages = ensureToolCallsHaveResponses(stream.values?.messages || []);
     const { getAgentConfig } = useConfigStore.getState();
 
     stream.submit(
       { messages: [...toolMessages, newHumanMessage] },
       {
-        streamMode: ["values"],
         optimisticValues: (prev) => ({
           ...prev,
           messages: [
@@ -342,7 +341,6 @@ export function Thread() {
 
     stream.submit(undefined, {
       checkpoint: parentCheckpoint,
-      streamMode: ["values"],
       config: {
         configurable: {
           ...getAgentConfig(agentId),
